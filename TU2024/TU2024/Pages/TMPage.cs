@@ -75,7 +75,7 @@ namespace TU2024.Pages
             lastPage1.Click();
             
             IWebElement updatedRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            Assert.That(updatedRecord.Text == "Gummies", "Failed to create new record");
+            Assert.That(updatedRecord.Text == "Gummies", "Failed to update new record");
            
 
         }
