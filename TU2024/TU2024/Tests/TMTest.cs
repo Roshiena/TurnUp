@@ -29,7 +29,7 @@ namespace TU2024.Tests
             driver = new ChromeDriver();
 
             loginPageObject.LoginSteps();
-            homePageObj.GoToTMPage(driver);
+            homePageObj.GoToTMPage();
 
         }
 

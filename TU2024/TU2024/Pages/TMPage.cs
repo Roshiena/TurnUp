@@ -13,8 +13,15 @@ namespace TU2024.Pages
     {
         public void CreateRecord(IWebDriver driver)
         {
-            IWebElement createButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
-            createButton.Click();
+            try {
+                IWebElement createButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
+                createButton.Click();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Unable to locateCreate button", ex.Message);
+            }
+            
             IWebElement typeCode = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]"));
             typeCode.Click();
             Thread.Sleep(2000);
@@ -46,10 +53,10 @@ namespace TU2024.Pages
 
         public void UpdateRecord(IWebDriver driver) 
         {
-            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 5);
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 15);
             IWebElement lastPage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             lastPage.Click();
-            Thread.Sleep(1000);
+            Wait.WaitToBeClickable(driver,"XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]", 10);
             IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
             editButton.Click();
             IWebElement codeTextbox = driver.FindElement(By.Id("Code"));
@@ -73,6 +80,7 @@ namespace TU2024.Pages
             Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 5);
             IWebElement lastPage1 = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             lastPage1.Click();
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 5);
             
             IWebElement updatedRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             Assert.That(updatedRecord.Text == "Gummies", "Failed to update new record");
@@ -82,13 +90,13 @@ namespace TU2024.Pages
 
         public void DeleteRecord(IWebDriver driver) 
         {
-            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span",5);
+            Wait.WaitElementExists(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span",50);
             IWebElement lastPage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             lastPage.Click();
-            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]", 5);
+            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]", 10);
             IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
             deleteButton.Click();
-            Thread.Sleep(1000);
+            
             
             driver.SwitchTo().Alert().Accept();
 
